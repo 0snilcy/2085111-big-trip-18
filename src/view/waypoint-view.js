@@ -1,6 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import {humanizeDate, humanizeTime, calculateDuration} from '../utils/waypoint.js';
-// import he from 'he';
 
 const getOffers = (offersByType, offersIds) => {
   const offersArray = [];

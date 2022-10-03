@@ -57,6 +57,19 @@ const sortByTime = (a, b) => {
 
 const sortByPrice = (a, b) => b.basePrice - a.basePrice;
 
+const sortByDay = (a, b) => {
+  const bDate = dayjs(b.dateFrom).format('D');
+  const aDate = dayjs(a.dateFrom).format('D');
+  const diff = aDate - bDate;
+  if (diff !== 0) {
+    return diff;
+  } else {
+    const bTime = dayjs(b.dateFrom).format('H');
+    const aTime = dayjs(a.dateFrom).format('H');
+    return aTime - bTime;
+  }
+};
+
 const compareTime = (object, element) => {
   const date1 = dayjs(object.dateFrom);
   const date2 = dayjs(object.dateTo);
@@ -68,4 +81,4 @@ const compareTime = (object, element) => {
 
 const isDatesEqual = (dateA, dateB) => (dayjs(dateA.dateFrom).isSame(dateB.dateFrom, 'minutes')) && (dayjs(dateA.dateTo).isSame(dateB.dateTo, 'minutes'));
 
-export {humanizeDate, humanizeTime, calculateDuration, humanizeFullDate, sortByTime, sortByPrice, compareTime, isDatesEqual};
+export {humanizeDate, humanizeTime, calculateDuration, humanizeFullDate, sortByTime, sortByPrice, compareTime, isDatesEqual, sortByDay};

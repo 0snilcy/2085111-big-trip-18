@@ -5,7 +5,7 @@ import NewWaypointPresenter from './new-waypoint-presenter.js';
 import NoWaypointView from '../view/no-waypoints-view.js';
 import WaypointPresenter from './waypoint-presenter.js';
 import {SortType, UpdateType, UserAction, FilterType} from '../utils/const.js';
-import {sortByTime, sortByPrice} from '../utils/waypoint.js';
+import {sortByTime, sortByPrice, sortByDay} from '../utils/waypoint.js';
 import {filter} from '../utils/filter.js';
 import LoadingView from '../view/loading-view.js';
 import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
@@ -56,6 +56,8 @@ export default class TripListPresenter {
     const filteredWaypoints = filter[this.#filterType](waypoints);
 
     switch (this.#currentSortType) {
+      case SortType.DEFAULT:
+        return filteredWaypoints.sort(sortByDay);
       case SortType.PRICE:
         return filteredWaypoints.sort(sortByPrice);
       case SortType.TIME:
@@ -176,6 +178,7 @@ export default class TripListPresenter {
 
   #handleModeChange = () => {
     this.#waypointsPresenter.forEach((presenter) => presenter.resetView());
+    this.#newWaypointPresenter?.destroy();
   };
 
   #handleSortTypeChange = (sortType) => {
